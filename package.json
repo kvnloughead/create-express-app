@@ -12,6 +12,7 @@
     "mxp": "./bin/index.js"
   },
   "dependencies": {
+    "fs": "^0.0.1-security",
     "yargs": "^17.1.1"
   },
   "devDependencies": {
