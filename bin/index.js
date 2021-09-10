@@ -22,3 +22,4 @@ exec(getInitializationScript(args), (error, stdout, stderr) => {
   }
   console.log(`stdout: ${stdout}`);
 });
+
