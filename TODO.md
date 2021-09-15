@@ -1,1 +1,3 @@
-1. refactor using `shell.series` -- see here https://gist.github.com/millermedeiros/4724047
+1. make `name` into a non-option argument
+
+2. change some of calls to `exec` to `execSync`? Seems like asynchronicity is not necessary in a strictly linear progression of scripts.
