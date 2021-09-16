@@ -3,7 +3,7 @@ const yargs = require('yargs');
 const { execSync } = require('child_process');
 
 const scripts = require('../scripts');
-// const { executeScript } = require('../utils');
+const { scriptIntros } = require('../utils/constants');
 
 const args = yargs
   .usage('Usage: -n <project_name>')
@@ -13,16 +13,7 @@ const args = yargs
   .argv;
 
 scripts.forEach((script, i) => {
-  console.log(`Running script ${i}`);
+  console.log(scriptIntros[i]);
   const res = execSync(script(args)).toString();
   console.log(res);
 });
-
-// Promise.all(scripts.map((script) => executeScript(script, args)))
-// .then(() => {
-//   // at the moment I have no need for the return values
-//   console.log('Initializing project...\n');
-// })
-// .catch((err) => {
-//   console.error(err);
-// });
