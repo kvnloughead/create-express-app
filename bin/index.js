@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 const yargs = require('yargs');
+const { execSync } = require('child_process');
 
 const scripts = require('../scripts');
-const { executeScript } = require('../utils');
+// const { executeScript } = require('../utils');
 
 const args = yargs
   .usage('Usage: -n <project_name>')
@@ -11,23 +12,17 @@ const args = yargs
   })
   .argv;
 
-Promise.all(scripts.map((script) => executeScript(script, args)))
-  .then(() => {
-    // at the moment I have no need for the return values
-    console.log('Initializing project...\n');
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+scripts.forEach((script, i) => {
+  console.log(`Running script ${i}`);
+  const res = execSync(script(args)).toString();
+  console.log(res);
+});
 
-// exec(getInitializationScript(args), (error, stdout, stderr) => {
-//   if (error) {
-//     console.log(`error: ${error.message}`);
-//     return;
-//   }
-//   if (stderr) {
-//     console.log(`stderr: ${stderr}`);
-//     return;
-//   }
-//   console.log(`stdout: ${stdout}`);
+// Promise.all(scripts.map((script) => executeScript(script, args)))
+// .then(() => {
+//   // at the moment I have no need for the return values
+//   console.log('Initializing project...\n');
+// })
+// .catch((err) => {
+//   console.error(err);
 // });
