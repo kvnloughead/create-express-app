@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 const yargs = require('yargs');
-const { execSync } = require('child_process');
+const fsPromises = require('fs').promises;
+const path = require('path');
+const { execSync, exec } = require('child_process');
 
 const scripts = require('../scripts');
 const { scriptIntros } = require('../utils/constants');
@@ -17,3 +19,19 @@ scripts.forEach((script, i) => {
   const res = execSync(script(args)).toString();
   console.log(res);
 });
+
+const CWD = process.cwd();
+
+const INDEX_FILE_PATH = path.join(__dirname, '../templates/index.js');
+
+const createIndexFile = (options) => `
+  cd ${options.project_name}
+  cp ${path.join(__dirname, '..templates/index.js')} index.js
+  sed '1d' ${INDEX_FILE_PATH} >> index.js
+`;
+
+const createFileStructure = async (options) => {
+  await exec(createIndexFile(options));
+};
+
+createFileStructure(args);
