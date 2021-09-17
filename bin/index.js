@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const yargs = require('yargs');
-const fsPromises = require('fs').promises;
 const path = require('path');
 const { execSync, exec } = require('child_process');
 
@@ -20,8 +19,6 @@ scripts.forEach((script, i) => {
   console.log(res);
 });
 
-const CWD = process.cwd();
-
 const INDEX_FILE_PATH = path.join(__dirname, '../templates/index.js');
 
 const createIndexFile = (options) => `
@@ -30,8 +27,14 @@ const createIndexFile = (options) => `
   sed '1d' ${INDEX_FILE_PATH} >> index.js
 `;
 
+const createDirectories = (options) => `
+  cd ${options.project_name}
+  mkdir routes controllers models utils
+`;
+
 const createFileStructure = async (options) => {
   await exec(createIndexFile(options));
+  await exec(createDirectories(options));
 };
 
 createFileStructure(args);
