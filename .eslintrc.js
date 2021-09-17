@@ -12,5 +12,7 @@ module.exports = {
   },
   rules: {
     'no-console': 'off',
+    'arrow-body-style': 'off',
+    'no-shadow': { allow: ['options', 'args', 'path'] },
   },
 };
