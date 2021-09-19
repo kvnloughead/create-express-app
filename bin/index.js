@@ -4,10 +4,8 @@ const path = require('path');
 const fs = require('fs');
 const { execSync, exec } = require('child_process');
 const createFileStructure = require('../scripts/create-file-structure');
-
-const scripts = require('../scripts');
+const initialScripts = require('../scripts/initialize-and-install');
 const { scriptIntros } = require('../utils/constants');
-const { executionAsyncId } = require('async_hooks');
 
 const args = yargs
   .usage('Usage: -n <projectName>')
@@ -19,7 +17,7 @@ const args = yargs
   })
   .argv;
 
-scripts.forEach((script, i) => {
+initialScripts.forEach((script, i) => {
   console.log(scriptIntros[i]);
   const res = execSync(script(args)).toString();
   console.log(res);

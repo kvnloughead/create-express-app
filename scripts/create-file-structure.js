@@ -32,6 +32,30 @@ const createFile = (options) => {
   `;
 };
 
+
+const writeNpmScripts = (options) => {
+  const packageDotJSON = path.join(process.cwd(), options.projectName, 'package.json');
+  const runScripts = `  "start": "node index.js",
+    "dev": "nodemon index.js",
+    "heroku-web": "nodemon --exec 'heroku local'"\n`;
+  fs.readFile(packageDotJSON, 'utf8', (err, data) => {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("data", data)
+    const result = data.replace(/("scripts": {\n)(.*?)(}.*)/gms, 
+      (match, p1, p2, p3) => {
+        console.log('p1', p1)
+        console.log('p2', p2)
+        console.log('p3', p3)
+        return `${p1}${runScripts}${p3}`
+      });
+  fs.writeFile(packageDotJSON, result, 'utf8', function (err) {
+     if (err) return console.log(err);
+  });
+});
+}
+
 const createFileStructure = async (options) => {
   execSync(createDirectories(options));
   // create project/index.js
@@ -52,11 +76,11 @@ const createFileStructure = async (options) => {
     }));
     // create routes/model.js for each model in models
     execSync(createFile({
-      dirpath: 'controllers', srcFile: 'controller.js', dstFile: model, projectName: options.projectName, customize: ['modelName', model],
+      dirpath: 'controllers', srcFile: 'controller.js', dstFile: `${model}s`, projectName: options.projectName, customize: ['modelName', model],
     }));
     // create routes/model.js for each model in models
     execSync(createFile({
-      dirpath: 'routes', srcFile: 'route.js', dstFile: model, projectName: options.projectName, customize: ['modelName', model],
+      dirpath: 'routes', srcFile: 'route.js', dstFile: `${model}s`, projectName: options.projectName, customize: ['modelName', model],
     }));
     // declare route for each model in routes/index.js
     fs.appendFileSync(routesIndexPath(options.projectName), setUpRoute(model), (err) => {
@@ -67,6 +91,9 @@ const createFileStructure = async (options) => {
   fs.appendFile(routesIndexPath(options.projectName), 'module.exports = router;\n',  (err) => {
     if (err) throw err;
   });
+  writeNpmScripts(options);
 };
+
+
 
 module.exports = createFileStructure;
