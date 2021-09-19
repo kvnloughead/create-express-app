@@ -11,18 +11,18 @@ const createDirectories = (options) => `
 
 const customizeFile = (options) => {
   // inserts name of resoure in appropriate places in file
-  const { dirpath, dstFile, projectName } = options;
+  const { dirpath, dstFile, projectName, customize: [pattern, replace] } = options;
   const dstPath = path.join(projectName, dirpath, `${dstFile}.js`);
   return `
-    sed -i s/modelName/${dstFile}/g ${dstPath}
-    sed -i s/ModelName/${titleCase(dstFile)}/g ${dstPath}
+    sed -i s/${pattern}/${replace}/g ${dstPath}
+    sed -i s/${titleCase(pattern)}/${titleCase(replace)}/g ${dstPath}
   `;
 };
 
 const createFile = (options) => {
   // copies file from templates/ to appropriate destination 
   // modifying them as needed
-  const { dirpath, srcFile, dstFile, projectName, customize } = options;
+  const { dirpath, srcFile, dstFile, projectName, customize = false } = options;
   const srcPath = path.join(__dirname, '../templates', dirpath, srcFile);
   const dstPath = path.join(projectName, dirpath, `${dstFile}.js`);
   return `
@@ -43,20 +43,20 @@ const createFileStructure = async (options) => {
     dirpath: 'routes', srcFile: 'index.js', dstFile: 'index', projectName: options.projectName,
   }));
   execSync(createFile({
-    dirpath: 'utils', srcFile: 'constants.js', dstFile: 'constants', projectName: options.projectName,
+    dirpath: 'utils', srcFile: 'constants.js', dstFile: 'constants', projectName: options.projectName, customize: ['projectName', options.projectName],
   }));
   options.models.forEach(async (model) => {
     // create routes/model.js for each model in models
     execSync(createFile({
-      dirpath: 'models', srcFile: 'model.js', dstFile: model, projectName: options.projectName, customize: true,
+      dirpath: 'models', srcFile: 'model.js', dstFile: model, projectName: options.projectName, customize: ['modelName', model],
     }));
     // create routes/model.js for each model in models
     execSync(createFile({
-      dirpath: 'controllers', srcFile: 'controller.js', dstFile: model, projectName: options.projectName, customize: true,
+      dirpath: 'controllers', srcFile: 'controller.js', dstFile: model, projectName: options.projectName, customize: ['modelName', model],
     }));
     // create routes/model.js for each model in models
     execSync(createFile({
-      dirpath: 'routes', srcFile: 'route.js', dstFile: model, projectName: options.projectName, customize: true,
+      dirpath: 'routes', srcFile: 'route.js', dstFile: model, projectName: options.projectName, customize: ['modelName', model],
     }));
     // declare route for each model in routes/index.js
     fs.appendFileSync(routesIndexPath(options.projectName), setUpRoute(model), (err) => {

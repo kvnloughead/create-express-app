@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(DB_ADDRESS, {
+mongoose.connect(process.env.MONGO_DB_ADDRESS || DB_ADDRESS, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
