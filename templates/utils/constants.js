@@ -1,1 +1,2 @@
-// DB_ADDRESS and PORT can go in here
+/* eslint-disable */
+const DB_ADDRESS = 'mongodb://localhost:27017/project';

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const yargs = require('yargs');
 const path = require('path');
+const fs = require('fs');
 const { execSync, exec } = require('child_process');
 const createFileStructure = require('../scripts/create-file-structure');
 

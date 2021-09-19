@@ -1,3 +1,5 @@
+const path = require('path');
+
 const titleCase = (s) => s.charAt(0).toUpperCase() + s.slice(1)
 
 const installDependencies = (dependencies, options = {}) => {
@@ -8,19 +10,12 @@ const installDependencies = (dependencies, options = {}) => {
   return script;
 };
 
-// const executeScript = (script, options) => exec(script(options), (error, stdout, stderr) => {
-//   if (error) {
-//     console.log(`error: ${error.message}`);
-//     return;
-//   }
-//   if (stderr) {
-//     console.log(`stderr: ${stderr}`);
-//     return;
-//   }
-//   console.log(`stdout: ${stdout}`);
-// });
+const routesIndexPath = (project) => path.join(project, 'routes/index.js');
+const setUpRoute = (model) => `const ${model}Router = require('./${model}s');\nrouter.use('/${model}s', ${model}Router);\n\n`;
 
 module.exports = {
   titleCase,
+  routesIndexPath,
+  setUpRoute,
   installDependencies,
 };
