@@ -1,3 +1,5 @@
+const titleCase = (s) => s.charAt(0).toUpperCase() + s.slice(1)
+
 const installDependencies = (dependencies, options = {}) => {
   let script = '';
   dependencies.forEach((d) => {
@@ -19,5 +21,6 @@ const installDependencies = (dependencies, options = {}) => {
 // });
 
 module.exports = {
+  titleCase,
   installDependencies,
 };

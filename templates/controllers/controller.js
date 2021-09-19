@@ -1,5 +1,5 @@
 /* eslint-disable */
-const Foo = require('../models/foo');
+const ModelName = require('../models/modelName');
 
 module.exports = {
   
