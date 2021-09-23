@@ -25,6 +25,5 @@ const installPackages = (options) => `
   ${installDependencies(devDependencies, { saveDev: true })}
 `;
 
-// module.exports = [nodeInitialization, setUpGit, installPackages, writeNpmScripts];
-module.exports = [nodeInitialization];
+module.exports = [nodeInitialization, setUpGit, installPackages];
 
