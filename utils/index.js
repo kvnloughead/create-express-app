@@ -1,6 +1,6 @@
 const path = require('path');
 
-const titleCase = (s) => s.charAt(0).toUpperCase() + s.slice(1)
+const titleCase = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const installDependencies = (dependencies, options = {}) => {
   let script = '';
@@ -11,7 +11,8 @@ const installDependencies = (dependencies, options = {}) => {
 };
 
 const routesIndexPath = (project) => path.join(project, 'routes/index.js');
-const setUpRoute = (model) => `const ${model}Router = require('./${model}s');\nrouter.use('/${model}s', ${model}Router);\n\n`;
+const setUpRoute = (model) =>
+  `const ${model}Router = require('./${model}s');\nrouter.use('/${model}s', ${model}Router);\n\n`;
 
 module.exports = {
   titleCase,
