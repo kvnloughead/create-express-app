@@ -4,20 +4,20 @@ Command line utility to streamline creation of Express projects using MongoDB.
 
 ## Usage
 
-`mxp -n project-name`
+`create-express-app -n project-name`
 
 ## Development Usage
 
 I've been setting an alias 
 
 ```bash
-alias runmxp='cd ~/dev/testdir && rm -rf project && mxp'
+alias run-cea'cd ~/dev/testdir && rm -rf project && create-express-app'
 ```
 
 And then I run 
 
 ```bash
-runmxp -n project
+run-cea -n project
 ```
 
 to test it.

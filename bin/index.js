@@ -10,12 +10,17 @@ const { scriptIntros } = require('../utils/constants');
 const args = yargs
   .usage('Usage: -n <projectName>')
   .option('n', {
-    alias: 'projectName', describe: 'Name your project', type: 'string', demandOption: true,
+    alias: 'projectName',
+    describe: 'Name your project',
+    type: 'string',
+    demandOption: true,
   })
   .option('m', {
-    alias: 'models', describe: 'Space separated list of models', type: 'array', demandOption: false,
-  })
-  .argv;
+    alias: 'models',
+    describe: 'Space-separated list of (lowercase) models',
+    type: 'array',
+    demandOption: false,
+  }).argv;
 
 initialScripts.forEach((script, i) => {
   console.log(scriptIntros[i]);

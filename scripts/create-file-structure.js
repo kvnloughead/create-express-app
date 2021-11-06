@@ -107,7 +107,7 @@ const createFileStructure = async (options) => {
           customize: ['modelName', model],
         })
       );
-      // create routes/model.js for each model in models
+      // create controllers/model.js for each model in models
       execSync(
         createFile({
           dirpath: 'controllers',
