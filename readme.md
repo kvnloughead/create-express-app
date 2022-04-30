@@ -1,4 +1,4 @@
-# Mongo-Express (mxp)
+# Create Express App (CEA)
 
 Command line utility to streamline creation of Express projects using MongoDB.
 
