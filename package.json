@@ -9,7 +9,7 @@
   "author": "Kevin Loughead",
   "license": "ISC",
   "bin": {
-    "mxp": "./bin/index.js"
+    "mongo-express": "./bin/index.js"
   },
   "dependencies": {
     "fs": "^0.0.1-security",

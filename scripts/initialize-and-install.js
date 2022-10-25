@@ -4,7 +4,7 @@ const path = require('path');
 const { installDependencies } = require('../utils');
 const { dependencies, devDependencies } = require('../utils/constants');
 
-const gitignorables = 'node_modules/';
+const gitignorables = ['node_modules', '.DS_Store'];
 
 const nodeInitialization = (options) => `
   mkdir ${options.projectName}
@@ -16,7 +16,7 @@ const setUpGit = (options) => `
   cd ${options.projectName}
   git init
   touch .gitignore
-  echo ${gitignorables} >> .gitignore
+  echo "${gitignorables.join('\n')}" >> .gitignore
 `;
 
 const installPackages = (options) => `
@@ -26,4 +26,3 @@ const installPackages = (options) => `
 `;
 
 module.exports = [nodeInitialization, setUpGit, installPackages];
-

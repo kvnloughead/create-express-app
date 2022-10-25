@@ -23,9 +23,7 @@ const args = yargs
   }).argv;
 
 initialScripts.forEach((script, i) => {
-  console.log(scriptIntros[i]);
   const res = execSync(script(args)).toString();
-  console.log(res);
 });
 
 createFileStructure(args);

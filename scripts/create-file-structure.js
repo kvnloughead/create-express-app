@@ -41,7 +41,7 @@ const writeNpmScripts = (options) => {
   const packageDotJSON = path.join(
     process.cwd(),
     options.projectName,
-    'package.json'
+    'package.json',
   );
   const runScripts = `  "start": "node index.js",
     "dev": "nodemon index.js",
@@ -50,15 +50,11 @@ const writeNpmScripts = (options) => {
     if (err) {
       return console.log(err);
     }
-    console.log('data', data);
     const result = data.replace(
       /("scripts": {\n)(.*?)(}.*)/gms,
       (match, p1, p2, p3) => {
-        console.log('p1', p1);
-        console.log('p2', p2);
-        console.log('p3', p3);
         return `${p1}${runScripts}${p3}`;
-      }
+      },
     );
     fs.writeFile(packageDotJSON, result, 'utf8', function (err) {
       if (err) return console.log(err);
@@ -75,7 +71,7 @@ const createFileStructure = async (options) => {
       srcFile: 'index.js',
       dstFile: 'index',
       projectName: options.projectName,
-    })
+    }),
   );
   // create routes/index.js
   execSync(
@@ -84,7 +80,7 @@ const createFileStructure = async (options) => {
       srcFile: 'index.js',
       dstFile: 'index',
       projectName: options.projectName,
-    })
+    }),
   );
   execSync(
     createFile({
@@ -93,7 +89,7 @@ const createFileStructure = async (options) => {
       dstFile: 'constants',
       projectName: options.projectName,
       customize: ['projectName', options.projectName],
-    })
+    }),
   );
   options.models &&
     options.models.forEach(async (model) => {
@@ -105,7 +101,7 @@ const createFileStructure = async (options) => {
           dstFile: model,
           projectName: options.projectName,
           customize: ['modelName', model],
-        })
+        }),
       );
       // create controllers/model.js for each model in models
       execSync(
@@ -115,7 +111,7 @@ const createFileStructure = async (options) => {
           dstFile: `${model}s`,
           projectName: options.projectName,
           customize: ['modelName', model],
-        })
+        }),
       );
       // create routes/model.js for each model in models
       execSync(
@@ -125,7 +121,7 @@ const createFileStructure = async (options) => {
           dstFile: `${model}s`,
           projectName: options.projectName,
           customize: ['modelName', model],
-        })
+        }),
       );
       // declare route for each model in routes/index.js
       fs.appendFileSync(
@@ -133,7 +129,7 @@ const createFileStructure = async (options) => {
         setUpRoute(model),
         (err) => {
           if (err) throw err;
-        }
+        },
       );
     });
   // add module.exports to routes/index.js
@@ -142,7 +138,7 @@ const createFileStructure = async (options) => {
     'module.exports = router;\n',
     (err) => {
       if (err) throw err;
-    }
+    },
   );
   writeNpmScripts(options);
 };
